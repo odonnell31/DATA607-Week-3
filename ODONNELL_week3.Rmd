@@ -1,0 +1,98 @@
+---
+title: "DATA607 Week 3"
+author: "ODONNELL"
+date: "February 13, 2019"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(stringr)
+```
+```{r}
+raw.data <-"555-1239Moe Szyslak(636) 555-0113Burns, C. Montgomery555-6542Rev. Timothy Lovejoy555 8904Ned Flanders636-555-3226Simpson, Homer5553642Dr. Julius Hibbert"
+```
+
+```{r}
+name <- unlist(str_extract_all(raw.data, "[[:alpha:]., ]{2,}"))
+
+name
+```
+
+```{r}
+phone <- unlist(str_extract_all(raw.data, "\\(?(\\d{3})?\\)?(-| )?\\d{3}(-| )?\\d{4}"))
+
+phone
+```
+
+```{r}
+#problem 3.1
+
+#first_last <- unlist(str_extract_all(name, "[[:alpha:]]{2,}.+[[:alpha:]]{2,}"))
+
+first_last <- unlist(str_extract_all(name, "[[:alpha:]]{2,}[[:space:]][[:alpha:]]{2,}"))
+
+#"[[:alpha:]]{2,}(?!\\.)"
+
+first_last
+```
+```{r}
+#problem 3.2
+
+unlist(str_detect(name, "[[:alpha:]]{2,}\\."))
+```
+```{r}
+#problem 3.3
+
+unlist(str_detect(name, "[[:alpha:]]{3,}[[:space:]][[:alpha:]]{3,}"))
+```
+
+4.1
+
+[0-9]+\\$
+
+  This captures the expression that ends in the
+  most numbers 0-9. For example,
+  "michael91"
+  
+4.2
+
+\\b[a-z]{1,4}\\b
+
+  This captures words that start with 1-4
+  lowercase letters and ends with 1-4
+  lowercase letters.
+  For examples, "patagonia"
+  
+4.3
+
+.*?\\.txt$
+
+  This captures any string that ends in
+  ".txt" which is great for identifying
+  text files out of a list.
+  For example, "michael.txt"
+  
+4.4 
+
+\\d{2}/\\d{2}/\\d{4}
+
+  This captures a string that has
+  2 digits, then a forward slash,
+  then 2 digits, then a forward slash,
+  then 4 digits. For example,
+  35/26/2543
+  This would be great for
+  identifying a date.
+  
+4.5
+
+<(.+?)>.+?</\\1>
+
+  This captures a string that starts with
+  a group of characters that end with a period.
+  Then, there's a second group of characters.
+  For example,
+  "M. ODonnell"
